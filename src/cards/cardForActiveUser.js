@@ -3,6 +3,7 @@ import { sectionForCodeHostingSiteLink } from "../sections/sectionForCodeHosting
 import { processSuspiciousLinks } from "../processSuspiciousLinks.js";
 import { sectionsForLikelyPhishingLinks } from "../sections/sectionsForLikelyPhishingLinks.js";
 import { sectionsForNonTopMillionLinks } from "../sections/sectionsForNonTopMillionLinks.js";
+import { requestSupportSection } from "../sections/requestSupportSection.js";
 
 export const AWS_PHISHING_SITE_DOMAIN = "s3.amazonaws.com";
 export const AZURE_PHISHING_SITE_DOMAIN = "blob.core.windows.net";
@@ -13,6 +14,7 @@ export const GCP_PHISHING_SITE_DOMAIN = "storage.googleapis.com";
 export const cardForActiveUser = async (
   headers,
   fullLinkURIs,
+  baseUrl,
   messageBodies,
   fullMessageData
 ) => {
@@ -162,7 +164,8 @@ export const cardForActiveUser = async (
       .concat(sectionForBitlyFlagged ? bitlySection : [])
       .concat(sectionForGoogleSitesFlagged ? googleSitesSection : [])
       .concat(sectionForGCPFlagged ? gcpSection : [])
-      .concat(nonTopMillionLinksSections),
+      .concat(nonTopMillionLinksSections)
+      .concat(requestSupportSection(baseUrl)),
     // .concat(sectionForDebugging(potentialPhishingURIs, likelyPhishingURIs)),
   };
 };

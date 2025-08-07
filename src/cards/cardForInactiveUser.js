@@ -3,12 +3,14 @@ export const cardForInactiveUser = {
     {
       widgets: [
         {
-          imageUrl:
-            "https://www.toophishy.com/macmedics-powered-by-too-phishy.png",
-          altText: `MacMedics`,
-          onClick: {
-            openLink: {
-              url: "https://www.macmedics.ca/security",
+          image: {
+            imageUrl:
+              "https://www.toophishy.com/macmedics-powered-by-too-phishy.png",
+            altText: `MacMedics`,
+            onClick: {
+              openLink: {
+                url: "https://www.macmedics.ca/security",
+              },
             },
           },
         },

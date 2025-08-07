@@ -5,6 +5,8 @@ import { OAuth2Client } from "google-auth-library";
 import { processMessage } from "./src/processMessage.js";
 import { cardForActiveUser } from "./src/cards/cardForActiveUser.js";
 import { cardForInactiveUser } from "./src/cards/cardForInactiveUser.js";
+import * as util from "util";
+import { cardForSendingSupportRequest } from "./src/cards/cardForSendingSupportRequest.js";
 
 const gmail = google.gmail({ version: "v1" });
 // Create and configure the app
@@ -14,12 +16,16 @@ const app = express();
 app.set("trust proxy", true);
 app.use(express.json());
 
-const CUSTOMER_LIST = new Set(["lydia.stepanek@gmail.com"]);
+const CUSTOMER_LIST = new Set([
+  "lydia.stepanek@gmail.com",
+  "gsmtestuser@marketplacetest.net",
+  "gsmtestadmin@marketplacetest.net",
+]);
 
-// Initial route for the add-on
 app.post(
   "/",
   asyncHandler(async (req, res) => {
+    const baseUrl = `${req.protocol}://${req.hostname}${req.baseUrl}`;
     const currentMessageId = req.body.gmail.messageId;
     const event = req.body;
     const accessToken = event.authorizationEventObject.userOAuthToken;
@@ -52,10 +58,41 @@ app.post(
       ? await cardForActiveUser(
           headers,
           fullLinkURIs,
+          baseUrl,
           messageBodies,
           messageData
         )
       : cardForInactiveUser;
+    const renderAction = {
+      action: {
+        navigations: [
+          {
+            pushCard,
+          },
+        ],
+      },
+    };
+    res.json(renderAction);
+  })
+);
+
+app.post(
+  "/submitForm",
+  asyncHandler(async (req, res) => {
+    const event = req.body;
+    const formInputs = event.commonEventObject.formInputs;
+    const linksResponse = formInputs?.links?.stringInputs.value[0];
+    const attachmentsResponse = formInputs?.attachments?.stringInputs.value[0];
+    const passwordResponse = formInputs?.password?.stringInputs.value[0];
+    const nameResponse = formInputs?.name?.stringInputs.value;
+    const phoneNumberResponse = formInputs?.phone_number?.stringInputs.value;
+    const pushCard = cardForSendingSupportRequest(
+      linksResponse,
+      attachmentsResponse,
+      passwordResponse,
+      nameResponse,
+      phoneNumberResponse
+    );
     const renderAction = {
       action: {
         navigations: [
