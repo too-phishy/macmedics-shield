@@ -3,13 +3,18 @@ export const cardForInactiveUser = {
     {
       widgets: [
         {
-          image: {
-            imageUrl: "https://toophishy.com/gmail_logo.png",
+          imageUrl:
+            "https://www.toophishy.com/macmedics-powered-by-too-phishy.png",
+          altText: `MacMedics`,
+          onClick: {
+            openLink: {
+              url: "https://www.macmedics.ca/security",
+            },
           },
         },
         {
           textParagraph: {
-            text: "To get started sign up for a Too Phishy account!",
+            text: "To get started, contact Mac Medics for an account!",
           },
           horizontalAlignment: "CENTER",
         },
@@ -17,7 +22,7 @@ export const cardForInactiveUser = {
           buttonList: {
             buttons: [
               {
-                text: "Sign up",
+                text: "Contact",
                 color: {
                   red: 0.4,
                   blue: 0.227,
@@ -25,7 +30,7 @@ export const cardForInactiveUser = {
                 },
                 onClick: {
                   openLink: {
-                    url: "https://toophishy.com",
+                    url: "mailto:support@macmedics.ca",
                     openAs: "OVERLAY",
                     onClose: "RELOAD",
                   },

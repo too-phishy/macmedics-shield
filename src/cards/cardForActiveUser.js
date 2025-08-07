@@ -138,11 +138,12 @@ export const cardForActiveUser = async (
         widgets: [
           {
             image: {
-              imageUrl: "https://toophishy.com/gmail_logo.png",
-              altText: `TooPhishy image`,
+              imageUrl:
+                "https://www.toophishy.com/macmedics-powered-by-too-phishy.png",
+              altText: `MacMedics`,
               onClick: {
                 openLink: {
-                  url: "https://toophishy.com",
+                  url: "https://www.macmedics.ca/security",
                 },
               },
             },
