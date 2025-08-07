@@ -7,6 +7,7 @@ import { cardForActiveUser } from "./src/cards/cardForActiveUser.js";
 import { cardForInactiveUser } from "./src/cards/cardForInactiveUser.js";
 import * as util from "util";
 import { cardForSendingSupportRequest } from "./src/cards/cardForSendingSupportRequest.js";
+import { CUSTOMER_LIST } from "./src/customerList.js";
 
 const gmail = google.gmail({ version: "v1" });
 // Create and configure the app
@@ -15,12 +16,6 @@ const app = express();
 // Trust GCPs front end to for hostname/port forwarding
 app.set("trust proxy", true);
 app.use(express.json());
-
-const CUSTOMER_LIST = new Set([
-  "lydia.stepanek@gmail.com",
-  "gsmtestuser@marketplacetest.net",
-  "gsmtestadmin@marketplacetest.net",
-]);
 
 app.post(
   "/",

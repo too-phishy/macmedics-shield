@@ -43,3 +43,5 @@ dist
 # act
 .secrets
 
+# customer list
+src/customerList.js
